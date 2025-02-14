@@ -2,11 +2,14 @@
 from django.contrib import admin
 from django.urls import path, re_path
 from datas.views import  DispatchRetrieveUpdateDestroyView, DispatchListView,DispatchCreateView
+from shipment.views import ReysListCreateView, ReysRetrieveUpdateDestroyView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.static import serve
+
 schema_view = get_schema_view(
     openapi.Info(
         title="My API",
@@ -29,8 +32,10 @@ urlpatterns = [
     path('dispatches/<uuid:id>/', DispatchRetrieveUpdateDestroyView.as_view(), name='dispatch-detail'),
     path('dispatches/', DispatchListView.as_view(), name='dispatch-list-view'),
     path('dispatchcreate/', DispatchCreateView.as_view(), name='dispatch-create-view'),
-
+    path('reyslar/', ReysListCreateView.as_view(), name='reys-list'),
+    path('reyslar/<int:pk>/', ReysRetrieveUpdateDestroyView.as_view(), name='reys-detail'),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
