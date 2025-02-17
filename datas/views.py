@@ -1,6 +1,6 @@
 from rest_framework import generics, status
 from .models import Dispatch
-from .serializers import DispatchSerializer
+from .serializers import DispatchSerializer,DispatchSerializer2
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,16 +9,29 @@ from rest_framework.views import APIView
 
 class DispatchCreateView(APIView):
     def post(self, request):
-        serializer = DispatchSerializer(data=request.data)
-        
-        if not all(request.data.get(field) for field in Dispatch._meta.get_fields() if not getattr(field, 'null', False)):
-            return Response({"error": "All required fields must be provided"}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = DispatchSerializer2(data=request.data)
 
+        # Faol va majburiy maydonlarni olish (id maydonini chiqarib tashlaymiz)
+        required_fields = [
+            field.name for field in Dispatch._meta.get_fields()
+            if not field.blank and not field.null and field.name != 'id'
+        ]
+
+        # Agar barcha majburiy maydonlar bo'sh bo'lmasa, xatolik qaytarish
+        missing_fields = [field for field in required_fields if field not in request.data or not request.data.get(field)]
+        
+        if missing_fields:
+            return Response({"error": f"Missing required fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Serializerni tekshirish
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
     
 class DispatchListView(generics.ListCreateAPIView):
     queryset = Dispatch.objects.all()
