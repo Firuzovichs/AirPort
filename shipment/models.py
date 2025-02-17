@@ -57,7 +57,7 @@ class Country(models.Model):
         return self.name
 class Capital(models.Model):
     name = models.CharField(max_length=100)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE, default=1)  # default country_id
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.name
