@@ -4,8 +4,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.response import Response
-from .models import ReysModel,TransitModel, Capital,CountryCapital,CityDetail
-from .serializers import ReysSerializer, TransitSerializer,CapitalSerializer,CityDetailSerializer
+from .models import ReysModel,TransitModel, Capital,CityDetail,SexModel
+from .serializers import ReysSerializer, TransitSerializer,CapitalSerializer,CityDetailSerializer,SexSerializer
 # Create your views here.
 class ReysListCreateView(generics.ListCreateAPIView):
     queryset = ReysModel.objects.all()
@@ -14,6 +14,14 @@ class ReysListCreateView(generics.ListCreateAPIView):
 class ReysRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ReysModel.objects.all()
     serializer_class = ReysSerializer
+
+class SexListCreateView(generics.ListCreateAPIView):
+    queryset = SexModel.objects.all()
+    serializer_class = SexSerializer
+
+class SexRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SexModel.objects.all()
+    serializer_class = SexSerializer
 
 class TransitListCreateView(generics.ListCreateAPIView):
     queryset = TransitModel.objects.all()

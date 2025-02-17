@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from .models import ReysModel, TransitModel,Capital, Country, CityDetail
+from .models import ReysModel, TransitModel,Capital, Country, CityDetail,SexModel
+
+class SexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SexModel
+        fields = "__all__"
+
+
 
 class ReysSerializer(serializers.ModelSerializer):
     class Meta:
