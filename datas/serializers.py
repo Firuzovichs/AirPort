@@ -1,46 +1,32 @@
 from rest_framework import serializers
 from .models import Dispatch
 
-# class DispatchSerializer(serializers.ModelSerializer):
-#     tranzit = serializers.SerializerMethodField()
-#     sex_1 = serializers.SerializerMethodField()
-#     sex_2 = serializers.SerializerMethodField()
-#     to_country = serializers.SerializerMethodField()
-#     to_capital = serializers.SerializerMethodField()
-#     from_country = serializers.SerializerMethodField()
-#     from_capital = serializers.SerializerMethodField()
-
-#     class Meta:
-#         model = Dispatch
-#         fields = [
-#             "tranzit", "sex_1", "sex_2", "data_reception", "data_dispatch",
-#             "to_country", "to_capital", "from_country", "from_capital"
-#         ]
-
-#     def get_tranzit(self, obj):
-#         return obj.tranzit.name if obj.tranzit else None
-
-#     def get_sex_1(self, obj):
-#         return obj.sex_1.name if obj.sex_1 else None
-
-#     def get_sex_2(self, obj):
-#         return obj.sex_2.name if obj.sex_2 else None
-
-#     def get_to_country(self, obj):
-#         return obj.to_country.name if obj.to_country else None
-
-#     def get_to_capital(self, obj):
-#         return obj.to_capital.name if obj.to_capital else None
-
-#     def get_from_country(self, obj):
-#         return obj.from_country.name if obj.from_country else None
-
-#     def get_from_capital(self, obj):
-#         return obj.from_capital.name if obj.from_capital else None
 class DispatchSerializer(serializers.ModelSerializer):
+    type = serializers.CharField(source='type.name', allow_null=True)
+    tranzit = serializers.CharField(source='tranzit.name', allow_null=True)
+    sex_1 = serializers.CharField(source='sex_1.name', allow_null=True)
+    sex_2 = serializers.CharField(source='sex_2.name', allow_null=True)
+    to_country = serializers.CharField(source='to_country.name', allow_null=True)
+    to_capital = serializers.CharField(source='to_capital.name', allow_null=True)
+    from_country = serializers.CharField(source='from_country.name', allow_null=True)
+    from_capital = serializers.CharField(source='from_capital.name', allow_null=True)
+    status = serializers.CharField(source='status.name', allow_null=True)
+    category_status = serializers.CharField(source='category_status.name', allow_null=True)
+    
+    data_reception = serializers.SerializerMethodField()
+    data_dispatch = serializers.SerializerMethodField()
 
+    def get_data_reception(self, obj):
+        return obj.data_reception.strftime('%d-%m-%Y') if obj.data_reception else None
 
+    def get_data_dispatch(self, obj):
+        return obj.data_dispatch.strftime('%d-%m-%Y') if obj.data_dispatch else None
+    
     class Meta:
         model = Dispatch
-        fields = "__all__"
-        
+        fields = [
+            'id', 'type', 'tranzit', 'sex_1', 'sex_2', 'data_reception', 'data_dispatch',
+            'dispatches', 'to_country', 'to_capital', 'from_country', 'from_capital',
+            'status', 'category_status', 'quantity', 'weight', 'note', 'flightNumber'
+        ]
+

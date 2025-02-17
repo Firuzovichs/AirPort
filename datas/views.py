@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
+
 class DispatchCreateView(APIView):
     def post(self, request):
         serializer = DispatchSerializer(data=request.data)
