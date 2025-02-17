@@ -2,13 +2,15 @@
 from django.contrib import admin
 from django.urls import path, re_path
 from datas.views import  DispatchRetrieveUpdateDestroyView, DispatchListView,DispatchCreateView
-from shipment.views import ReysListCreateView, ReysRetrieveUpdateDestroyView
+from shipment.views import ReysListCreateView, ReysRetrieveUpdateDestroyView,TransitListCreateView,CapitalListView,CityDetailByCapital, TransitRetrieveUpdateDestroyView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.static import serve
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -23,7 +25,6 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
@@ -34,6 +35,10 @@ urlpatterns = [
     path('dispatchcreate/', DispatchCreateView.as_view(), name='dispatch-create-view'),
     path('reyslar/', ReysListCreateView.as_view(), name='reys-list'),
     path('reyslar/<int:pk>/', ReysRetrieveUpdateDestroyView.as_view(), name='reys-detail'),
+    path('transit/', TransitListCreateView.as_view(), name='transit-list'),
+    path('transit/<int:pk>/', TransitRetrieveUpdateDestroyView.as_view(), name='transit-detail'),
+    path('capitals/', CapitalListView.as_view(), name='capital-list'),
+    path('capitals/<int:capital_id>/details/', CityDetailByCapital.as_view(), name='city-detail-by-capital'),
 ]
 
 if settings.DEBUG:

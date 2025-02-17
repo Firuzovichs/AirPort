@@ -49,23 +49,28 @@ class CategoryMailModel(models.Model):
         return self.name
 
 
+    
 class Country(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
-
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
-
 class Capital(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=100)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, default=1)  # default country_id
 
     def __str__(self):
         return self.name
+
+class CityDetail(models.Model):
+    capital = models.ForeignKey(Capital, on_delete=models.CASCADE)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Details of {self.capital.name} in {self.country.name}"
 
 class CountryCapital(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.IntegerField(primary_key=True)  # Asosiy kalit
     country = models.OneToOneField(Country, on_delete=models.CASCADE)
     capital = models.OneToOneField(Capital, on_delete=models.CASCADE)
 
