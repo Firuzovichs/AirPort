@@ -34,8 +34,8 @@ class DispatchSerializer(serializers.ModelSerializer):
 class DispatchSerializer2(serializers.ModelSerializer):
     type = serializers.PrimaryKeyRelatedField(queryset=TypeModel.objects.all(), required=False)
     tranzit = serializers.PrimaryKeyRelatedField(queryset=TransitModel.objects.all(), required=False)
-    sex_1 = serializers.PrimaryKeyRelatedField(queryset=SexModel.objects.all(), required=False)
-    sex_2 = serializers.PrimaryKeyRelatedField(queryset=SexModel.objects.all(), required=False)
+    sex_1 = serializers.PrimaryKeyRelatedField(queryset=SexModel.objects.all(), required=False,allow_null=True)
+    sex_2 = serializers.PrimaryKeyRelatedField(queryset=SexModel.objects.all(), required=False,allow_null=True)
     to_country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=False)
     to_capital = serializers.PrimaryKeyRelatedField(queryset=Capital.objects.all(), required=False)
     from_country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=False)
