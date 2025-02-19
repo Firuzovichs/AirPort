@@ -51,3 +51,9 @@ class DispatchSerializer2(serializers.ModelSerializer):
     class Meta:
         model = Dispatch
         fields = '__all__'
+
+
+class DispatchSerializer3(serializers.ModelSerializer):
+    class Meta:
+        model = Dispatch
+        fields = '__all__'  # Barcha maydonlarni chiqaramiz

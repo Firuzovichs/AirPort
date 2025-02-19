@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'shipment',
     'datas',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +67,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'airport.wsgi.application'
-
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

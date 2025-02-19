@@ -4,7 +4,17 @@ from .serializers import DispatchSerializer,DispatchSerializer2
 from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
 
+class DispatchListView3(ListAPIView):
+    queryset = Dispatch.objects.all()
+    serializer_class = DispatchSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    
+    filterset_fields = ['data_reception', 'data_dispatch', 'sex_1', 'from_capital', 'to_capital']
+    ordering_fields = ['created_at']  # Saralash mumkin
 
 
 class DispatchCreateView(APIView):
