@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path, re_path
-from datas.views import  DispatchRetrieveUpdateDestroyView, DispatchListView,DispatchCreateView,DispatchListView3
+from datas.views import  DispatchRetrieveUpdateDestroyView,DispatchListView,DispatchCreateView,DispatchListView3
 from shipment.views import ReysListCreateView,SexListCreateView,SexRetrieveUpdateDestroyView, ReysRetrieveUpdateDestroyView,TransitListCreateView,CapitalListView,CityDetailByCapital, TransitRetrieveUpdateDestroyView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi

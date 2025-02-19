@@ -13,7 +13,7 @@ class DispatchListView3(ListAPIView):
     serializer_class = DispatchSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     
-    filterset_fields = ['data_reception', 'data_dispatch', 'sex_1', 'from_capital', 'to_capital']
+    filterset_fields = ['data_reception', 'data_dispatch', 'sex_1', 'from_capital', 'to_capital','type','status']
     ordering_fields = ['created_at']  # Saralash mumkin
 
 
