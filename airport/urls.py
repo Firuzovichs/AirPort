@@ -2,7 +2,7 @@
 from django.contrib import admin
 from django.urls import path, re_path
 from datas.views import  DispatchRetrieveUpdateDestroyView,DispatchListView,DispatchCreateView,DispatchListView3
-from shipment.views import ReysListCreateView,SexListCreateView,SexRetrieveUpdateDestroyView, ReysRetrieveUpdateDestroyView,TransitListCreateView,CapitalListView,CityDetailByCapital, TransitRetrieveUpdateDestroyView
+from shipment.views import StatusListCreateView,StatusRetrieveUpdateDestroyView,ReysListCreateView,SexListCreateView,SexRetrieveUpdateDestroyView, ReysRetrieveUpdateDestroyView,TransitListCreateView,CapitalListView,CityDetailByCapital, TransitRetrieveUpdateDestroyView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
@@ -42,6 +42,8 @@ urlpatterns = [
     path('capitals/<int:capital_id>/details/', CityDetailByCapital.as_view(), name='city-detail-by-capital'),
     path('sexs/', SexListCreateView.as_view(), name='transit-list'),
     path('sexs/<int:pk>/', SexRetrieveUpdateDestroyView.as_view(), name='transit-detail'),
+    path('status/', StatusListCreateView.as_view(), name='status-list'),
+    path('status/<int:pk>/', StatusRetrieveUpdateDestroyView.as_view(), name='status-detail'),
 ]
 
 if settings.DEBUG:
