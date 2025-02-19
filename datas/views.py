@@ -18,7 +18,7 @@ class DispatchCreateView(APIView):
         ]
 
         # Majburiy maydonlar bo'sh bo'lsa, xatolik qaytarish
-        missing_fields = [field for field in required_fields if field not in request.data or request.data[field] in [None, "", []]]
+        missing_fields = [field for field in required_fields if field not in request.data or request.data[field] in ["", []]]
 
         if missing_fields:
             return Response({"error": f"Missing required fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)

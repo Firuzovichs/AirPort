@@ -43,7 +43,7 @@ class DispatchSerializer2(serializers.ModelSerializer):
     status = serializers.PrimaryKeyRelatedField(queryset=StatusModel.objects.all(), required=False)
     category_status = serializers.PrimaryKeyRelatedField(queryset=CategoryMailModel.objects.all(), required=False)
     data_reception = serializers.DateTimeField(required=False)
-    data_dispatch = serializers.DateTimeField(required=False)
+    data_dispatch = serializers.DateTimeField(required=False, allow_null=True)
     quantity = serializers.IntegerField(required=False)
     weight = serializers.FloatField(required=False)
     note = serializers.CharField(required=False)
