@@ -11,15 +11,15 @@ class DispatchCreateView(APIView):
     def post(self, request):
         serializer = DispatchSerializer2(data=request.data)
 
-        # Faol va majburiy maydonlarni olish (id maydonini chiqarib tashlaymiz)
+        # Majburiy maydonlarni serializer orqali olish
         required_fields = [
-            field.name for field in Dispatch._meta.get_fields()
-            if not field.blank and not field.null and field.name != 'id'
+            field_name for field_name, field in serializer.fields.items()
+            if field.required
         ]
 
-        # Agar barcha majburiy maydonlar bo'sh bo'lmasa, xatolik qaytarish
-        missing_fields = [field for field in required_fields if field not in request.data or not request.data.get(field)]
-        
+        # Majburiy maydonlar bo'sh bo'lsa, xatolik qaytarish
+        missing_fields = [field for field in required_fields if field not in request.data or request.data[field] in [None, "", []]]
+
         if missing_fields:
             return Response({"error": f"Missing required fields: {', '.join(missing_fields)}"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -29,6 +29,7 @@ class DispatchCreateView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
