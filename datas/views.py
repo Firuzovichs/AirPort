@@ -7,15 +7,23 @@ from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from django.db.models.functions import Cast
+from django.db.models import DateField
 
 class DispatchListView3(ListAPIView):
-    queryset = Dispatch.objects.all()
     serializer_class = DispatchSerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    
-    filterset_fields = ['data_reception', 'data_dispatch', 'sex_1', 'from_capital', 'to_capital','type','status']
-    ordering_fields = ['created_at']  # Saralash mumkin
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['sex_1', 'from_capital', 'to_capital', 'status', 'type']
 
+    def get_queryset(self):
+        queryset = Dispatch.objects.all()
+        data_reception = self.request.query_params.get('data_reception')
+
+        if data_reception:
+            queryset = queryset.annotate(date_only=Cast('data_reception', DateField()))
+            queryset = queryset.filter(date_only=data_reception)
+
+        return queryset
 
 class DispatchCreateView(APIView):
     def post(self, request):
