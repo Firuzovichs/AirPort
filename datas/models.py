@@ -21,6 +21,7 @@ class Dispatch(models.Model):
     weight = models.FloatField(null=True,blank=True)
     note = models.TextField(null=True, blank=True)
     flightNumber = models.CharField(max_length=255, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         if self.status is not None:
